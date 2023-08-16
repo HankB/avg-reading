@@ -29,11 +29,24 @@ Planning
 
 ## Functionality
 
-* Subscribe/publish MQTT
-* Parse JSON
+* Subscribe/publish MQTT (delegate this to `mosquitto_sub` and `mosquitto_pub`)
+* Parse JSON using the JSON module.
 * Calculate a moving average. This could be the average of 'N' previous readings which would require storage of 'N' previous readings. Could also use a digital low pass filter that would use fixed storage.
-* Period of these readings can vary but can be determined by the value of 't' in successive readings. ('t' is "UNIX time" - seconds since midnight, January 1, 1970 GMT.)
+* The period of these readings can vary but can be determined by the value of 't' in successive readings. ('t' is "UNIX time" - seconds since midnight, January 1, 1970 GMT.)
+
+With the MQTT interfacing delegated to external programs, the core logic and JSON transcription can be handled with Python as installed.
 
 ## Plan
 
-WIP
+1. Figure out a directory structure. (Start with flat?)
+1. Payload parsing (read from STDIN.)
+1. Implement filter and output as JSON.
+1. Tie together with `mosquitto_sub`/`mosquitto_pub`.
+
+## exercise
+
+```text
+echo '{"t": 1692193563, "temp": 50.9}' | ./avg_reading.py 
+echo '{"t": 1692193561, "temp": 6.574999999999999}' | ./avg_reading.py 
+mosquitto_sub -t HA/niwot/basement/freezer_temp -h mqtt|./avg_reading.py 
+```
