@@ -6,7 +6,11 @@ import json
 
 def parse_line(line):
     """ parse timestamp and temperature from input """
-    fields = json.loads(line)
+    try:
+        fields = json.loads(line)
+    except ValueError:
+        print("Cannot decode '{}'".format(line.strip("\n")), file=sys.stderr)
+        return (-1, "")
     return (fields["t"], fields["temp"])
 
 
