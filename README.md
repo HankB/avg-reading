@@ -1,12 +1,12 @@
-# avg_temp
+# avg-reading
 
-Publish average temperature of stream of instantaneous readings.
+Publish average value of stream of instantaneous readings.
 
-Subscribe to an MQTT topic that monitors temperature (e.g. refrigerator temperature) and republish a moving average.
+Subscribe to an MQTT topic that monitors temperature (e.g. refrigerator temperature) and republish a moving average. Potential other use is average energy usage for appliances.
 
 ## Motivation
 
-Normal temperature variation makes it difficult to set an alarm from instantaneous readings. 
+Normal temperature variation makes it difficult to set an alarm from instantaneous readings. Energy readings tend to be on/off of stair step (during defrost cycle.)
 
 ## Background
 
