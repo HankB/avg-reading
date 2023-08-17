@@ -10,7 +10,7 @@ Normal temperature variation makes it difficult to set an alarm from instantaneo
 
 ## Background
 
-Home automation using Home Assistant (HASS) and treading temperature using Raspberry Pi Zero Ws which publish to an MQTT broker. The period for freezer temperature is about half an hour. The period for the refrigerator is ??? (recovering from a forced defrost at the moment.) 
+Home automation using Home Assistant (HASS) and reading temperature using Raspberry Pi Zero Ws which publish to an MQTT broker. The period for freezer temperature is about half an hour. The period for the refrigerator is ??? (recovering from a forced defrost at the moment.) 
 
 ## Typical readings
 
