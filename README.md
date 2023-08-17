@@ -25,7 +25,9 @@ HA/niwot/basement/freezer_temp {"t": 1692193561, "temp": 6.574999999999999}
 
 ## Status
 
-Planning
+Calculates average from incoming JSON data and outputs in a format suitable for importing into a spreadsheet as a CSV.
+
+TODO: Format output as a JSON payload suitable for integration with HASS
 
 ## Functionality
 
@@ -43,10 +45,17 @@ With the MQTT interfacing delegated to external programs, the core logic and JSO
 1. Implement filter and output as JSON.
 1. Tie together with `mosquitto_sub`/`mosquitto_pub`.
 
-## exercise
+## exercise / test
 
 ```text
 echo '{"t": 1692193563, "temp": 50.9}' | ./avg_reading.py 
 echo '{"t": 1692193561, "temp": 6.574999999999999}' | ./avg_reading.py 
 mosquitto_sub -t HA/niwot/basement/freezer_temp -h mqtt|./avg_reading.py 
+```
+
+Given a file with saved messages from `mosquitto_sub -v -t \# -h mqtt` output
+
+```text
+grep 'HA/niwot/basement/freezer_temp' ~/Downloads/mqtt/messages.txt| head -10| \
+    cut -f 1 -d ' ' --complement|./avg_reading.py
 ```
