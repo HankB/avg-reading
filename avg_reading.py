@@ -51,7 +51,7 @@ def main():
         (timestamp, temperature) = parse_line(line)
         if timestamp > 0:
             avg = average(temperature)
-            print(json.dumps({"t":timestamp, "temp":temperature, "average":avg}))
+            print(json.dumps({"t":timestamp, "temp":temperature, "average":avg}), flush=True)
 
 
 if __name__ == '__main__':
