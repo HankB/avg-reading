@@ -50,7 +50,7 @@ def main():
     for line in sys.stdin:
         (timestamp, temperature) = parse_line(line)
         avg = average(temperature)
-        print(timestamp, temperature, avg)
+        print(json.dumps({"t":timestamp, "temp":temperature, "average":avg}))
 
 
 if __name__ == '__main__':
