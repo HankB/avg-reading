@@ -59,3 +59,30 @@ Given a file with saved messages from `mosquitto_sub -v -t \# -h mqtt` output
 grep 'HA/niwot/basement/freezer_temp' ~/Downloads/mqtt/messages.txt| head -10| \
     cut -f 1 -d ' ' --complement|./avg_reading.py
 ```
+
+Test invalid input
+```text
+echo 'not JSON}' | ./avg_reading.py 
+echo '' | ./avg_reading.py 
+cat <<EOF | ./avg_reading.py 
+> "t": 1691522402, "temp": 38.4116}
+{"t": 1691522702, "temp": 38.1866}
+not JSON
+{"t": 1691523003, "temp": 45.725}
+{"t": 1691523302, "temp": 40.4366}
+{"t": 1691523602, "temp": 38.8616}
+{"t": 1691523902, "temp": 38.975}
+{"t": 1691524202, "temp": 38.75}
+{"t": 1691524503, "temp": 38.6366}
+{"t": 1691524802, "temp": 38.525}
+{"t": 1691524102, "temp": 38.4116}
+EOF
+```
+
+## Usage
+
+This will be used in a system which formats MQTT topics as shown in the examples. It will be in a pipeline filtering output from `mosquitto_sub` and producing output suitable to publish using `mosquitto_pub`. This can be entirely put in a `crontab` or Systemd entry or can be ebshrined in a one line script for convenience. The line might look like
+
+```text
+mosquitto_sub -t HA/puyallup/kitchen/fridge_temp -h mqtt | ./avg_reading.py | mosquitto_pub -l -t HA/$HOSTNAME/kitchen/fridge_temp_average -h mqtt
+```
