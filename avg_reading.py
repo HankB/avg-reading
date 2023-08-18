@@ -10,11 +10,11 @@ def parse_line(line):
         fields = json.loads(line)
         # do the fields exist in the JSON?
         if "t" not in fields or "temp" not in fields:
-            return (-1, "")
+            return (-1, 0)
     # Error parsing JSON
     except ValueError:
         print("Cannot decode '{}'".format(line.strip("\n")), file=sys.stderr)
-        return (-1, "")
+        return (-1, 0)
     return (fields["t"], fields["temp"])
 
 # Python - no static variable in functions :-/
@@ -49,8 +49,9 @@ def main():
     """ main entry point """
     for line in sys.stdin:
         (timestamp, temperature) = parse_line(line)
-        avg = average(temperature)
-        print(json.dumps({"t":timestamp, "temp":temperature, "average":avg}))
+        if timestamp > 0:
+            avg = average(temperature)
+            print(json.dumps({"t":timestamp, "temp":temperature, "average":avg}))
 
 
 if __name__ == '__main__':
